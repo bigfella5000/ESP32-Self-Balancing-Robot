@@ -22,9 +22,9 @@ cam_firmware/           - ESP32-CAM firmware (Arduino)
   app_httpd.cpp         - HTTP stream server  
   camera.cpp            - Camera init, sensor tuning, and WiFi connection  
 cv_tasks/               - Python computer vision pipeline  
-  collect_data.py       - Captures webcam images to dataset/ for each gesture class  
-  train_gesture_clf.py  - Trains gesture classifier and saves gesture_clf.pkl  
-  main.py               - Reads ESP32-CAM stream and sends UDP commands based on inference data  
+  gesture_collector.py  - Captures webcam images to dataset/ for each gesture class  
+  gesture_trainer.py    - Trains gesture classifier and saves gesture_clf.pkl  
+  cv_controller.py      - Reads ESP32-CAM stream and sends UDP commands based on inference data  
 ```
 
 
@@ -66,14 +66,14 @@ HOW TO RUN
 
 3. Flash ESP32-CAM:  
      pio run -e esp32cam --target upload  
-   Note the IP address printed to serial monitor and set ESP32_CAM_IP in main.py.  
+   Note the IP address printed to serial monitor and set ESP32_CAM_IP in cv_controller.py.  
 
 4. Flash ESP32-WROOM-32D:  
      pio run -e esp32 --target upload  
-   Note the IP address printed to serial monitor and set UDP_IP in main.py.  
+   Note the IP address printed to serial monitor and set UDP_IP in cv_controller.py.  
 
 5. Run live inference:  
-     python main.py  
+     python cv_controller.py  
    Must be in the cv_tasks directory when running above command to ensure it can detect models.  
    Press q to quit.  
 
@@ -88,11 +88,11 @@ Written by me:
   src/motors.h  
   src/motors.c  
   src/connections.h  
+  src/connections.c: udp_listener_task function  
   src/main.c  
   cv_tasks/gesture_collector.py  
   cv_tasks/gesture_trainer.py  
   cv_tasks/cv_controller.py  
-  src/connections.c: udp_listener_task function  
 
 Copied from external repo:  
   cam_firmware/board_config.h  
