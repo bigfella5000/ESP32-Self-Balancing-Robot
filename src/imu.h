@@ -1,7 +1,7 @@
 #ifndef IMU_H
 #define IMU_H
 
-#include "useful_shit.h"
+#include "useful_stuff.h"
 
 // Initializes i2c connection to IMU
 i2c_master_dev_handle_t i2c_init();

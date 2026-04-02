@@ -91,3 +91,7 @@ int set_motor_speed(int motor, int duty) {
     ledc_update_duty(LEDC_LOW_SPEED_MODE, (motor == 1) ? LEDC_CHANNEL_0 : LEDC_CHANNEL_1);
     return 0;
 }
+
+void slow_decel(int motor) {
+    // TODO: Get the speed of the motor using the encoder sensors, and then gradually decrement motor speed
+}
