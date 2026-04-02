@@ -92,13 +92,12 @@ Written by me:
   cv_tasks/gesture_collector.py  
   cv_tasks/gesture_trainer.py  
   cv_tasks/cv_controller.py  
-
-Adapted from other code:  
-  src/connections.c: lines 78, 96-120 written by me  
+  src/connections.c: udp_listener_task function  
 
 Copied from external repo:  
   cam_firmware/board_config.h  
   cam_firmware/camera_pins.h  
   cam_firmware/app_httpd.cpp  
   cam_firmware/camera.cpp  
+  src/connections.c: event_handler and wifi_init functions  
 ```
