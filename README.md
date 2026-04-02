@@ -75,7 +75,7 @@ HOW TO RUN
 CODE AUTHORSHIP
 ---------------
 Written by me:  
-  src/useful_stuff.h  
+    src/useful_stuff.h  
   src/imu.h  
   src/imu.c  
   src/motors.h  
