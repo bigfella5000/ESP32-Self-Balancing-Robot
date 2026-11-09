@@ -1,12 +1,6 @@
 #ifndef CONNECTIONS_H
 #define CONNECTIONS_H
 
-#include "esp_wifi.h"
-#include "esp_event.h"
-#include "nvs_flash.h"
-#include "lwip/sockets.h"
-#include "useful_stuff.h"
-
 #define WIFI_SSID "ZyXELAAFD88"
 #define WIFI_PASSWORD "3EKH74VVNXXM4"
 #define WIFI_MAX_RETRY 5

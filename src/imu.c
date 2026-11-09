@@ -1,13 +1,12 @@
+#include "pin_mappings.h"
 #include "imu.h"
 
-#define I2C_MASTER_SCL_PIN 22
-#define I2C_MASTER_SDA_PIN 21
-#define I2C_MASTER_PORT 0
-#define I2C_MASTER_FREQ_HZ 400000
-#define I2C_TIMEOUT_MS 5
-#define IMU_I2C_ADDR 0x68
+#define I2C_MASTER_PORT     0
+#define I2C_MASTER_FREQ_HZ  400000
+#define I2C_TIMEOUT_MS      5
+#define IMU_I2C_ADDR        0x68
 #define IMU_PWR_MGMT_1_ADDR 0x6B
-#define IMU_DATA_ADDR 0x3B
+#define IMU_DATA_ADDR       0x3B
 
 i2c_master_dev_handle_t i2c_init() {
     i2c_master_bus_config_t bus_conf = {
@@ -86,7 +85,7 @@ imu_adj_t calibrate_imu(i2c_master_dev_handle_t imu_handle) {
         avg_gx += data.gx;
         avg_gy += data.gy;
         avg_gz += data.gz;
-        delay(DELAY_BETWEEN_MEASUREMENTS);
+        vTaskDelay(pdMS_TO_TICKS(DELAY_BETWEEN_MEASUREMENTS));
     }
 
     avg_ax /= NUM_MEASUREMENTS;

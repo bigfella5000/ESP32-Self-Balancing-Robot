@@ -1,13 +1,7 @@
-# include "motors.h"
+#include "driver/ledc.h"
 
-// Pin Definitions for motor driver
-#define STBY_PIN 27
-#define PWMA_PIN 16
-#define AIN1_PIN 14
-#define AIN2_PIN 13
-#define PWMB_PIN 17
-#define BIN1_PIN 26
-#define BIN2_PIN 25
+#include "pin_mappings.h"
+#include "motors.h"
 
 void init_motor_driver() {
     gpio_config_t io_conf = {

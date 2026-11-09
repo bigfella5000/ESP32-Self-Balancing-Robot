@@ -118,7 +118,7 @@ void setup() {
 
   Serial.print("WiFi connecting");
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    vTaskDelay(pdMS_TO_TICKS(500));
     Serial.print(".");
   }
   Serial.println("");
@@ -133,5 +133,5 @@ void setup() {
 
 void loop() {
   // Do nothing. Everything is done in another task by the web server
-  delay(10000);
+  vTaskDelay(pdMS_TO_TICKS(10000));
 }

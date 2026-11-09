@@ -1,7 +1,27 @@
 #ifndef IMU_H
 #define IMU_H
 
-#include "useful_stuff.h"
+#include "driver/i2c_master.h"
+
+// Holds the values for the imu readings
+typedef struct {
+	float ax;
+    float ay;
+    float az;
+    float gx;
+    float gy;
+    float gz;
+} imu_data_t;
+
+// Holds the adjustment values for the imu readings after performing a calibration
+typedef struct {
+	float ax;
+    float ay;
+    float az;
+    float gx;
+    float gy;
+    float gz;
+} imu_adj_t;
 
 // Initializes i2c connection to IMU
 i2c_master_dev_handle_t i2c_init();

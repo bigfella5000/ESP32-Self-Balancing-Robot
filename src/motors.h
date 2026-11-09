@@ -1,8 +1,6 @@
 #ifndef MOTORS_H
 #define MOTORS_H
 
-#include "useful_stuff.h"
-
 // Initializes pwm connction to motor driver
 void init_motor_driver();
 
