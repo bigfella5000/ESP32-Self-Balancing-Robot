@@ -1,7 +1,9 @@
+#include <esp_log.h>
 #include "esp_wifi.h"
 #include "esp_event.h"
 #include "nvs_flash.h"
 #include "lwip/sockets.h"
+
 #include "connections.h"
 
 static const char *TAG = "connections";

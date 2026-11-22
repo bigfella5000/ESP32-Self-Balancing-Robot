@@ -1,3 +1,6 @@
+#include <esp_log.h>
+#include "freertos/FreeRTOS.h"
+
 #include "pin_mappings.h"
 #include "imu.h"
 
@@ -40,9 +43,9 @@ imu_data_t get_imu_data(i2c_master_dev_handle_t imu_handle, imu_adj_t* imu_adj) 
     uint8_t data_buf[14] = {0};
     esp_err_t ret = i2c_master_transmit_receive(imu_handle, &reg_addr, 1, data_buf, 14, 100);
     
-    if (ret != ESP_OK) {
-        ESP_LOGE("IMU_DATA", "Data read failed: %s\n", esp_err_to_name(ret));
-    }
+    // if (ret != ESP_OK) {
+    //     ESP_LOGE("IMU_DATA", "Data read failed: %s\n", esp_err_to_name(ret));
+    // }
 
     float ACCEL_SCALE = 16384.0;
     float GYRO_SCALE = 131.0;

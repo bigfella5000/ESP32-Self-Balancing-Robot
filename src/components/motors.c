@@ -1,3 +1,5 @@
+#include <string.h>
+#include <esp_log.h>
 #include "driver/ledc.h"
 
 #include "pin_mappings.h"

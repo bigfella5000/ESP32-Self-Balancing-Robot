@@ -5,10 +5,12 @@
 #include "freertos/FreeRTOS.h"
 
 #include "algorithms.h"
-#include "connections.h"
-#include "motors.h"
-#include "imu.h"
-#include "lcd.h"
+#include "network/connections.h"
+#include "network/ota.h"
+#include "network/remote_logging.h"
+#include "components/motors.h"
+#include "components/imu.h"
+#include "components/lcd.h"
 
 cv_data_t cv_data = {0};
 
@@ -29,7 +31,8 @@ void test1() {
 // Control motor speed by rotating IMU
 void test2() {
     int MAX_GX = 100;
-    char *dir;
+    char *dir1;
+    char *dir2;
     int speed;
     imu_data_t data;
 
@@ -43,9 +46,12 @@ void test2() {
     while (1) {
         data = get_imu_data(imu_handle, &adj);
 
-        dir = (data.gx > 0.0) ? "cw" : "ccw";
+        dir1 = (data.gx > 0.0) ? "cw" : "ccw";
+        dir2 = (data.gx > 0.0) ? "ccw" : "cw";
         speed = (data.gx > 5 || data.gx < -5) ? fmin(1023, (int)((fabsf(data.gx) / MAX_GX) * 1023)) : 0;
-        set_motor_dir(2, dir);
+        set_motor_dir(1, dir1);
+        set_motor_speed(1, speed);
+        set_motor_dir(2, dir2);
         set_motor_speed(2, speed);
     }
 }
@@ -89,6 +95,13 @@ void test3() {
     }
 }
 
+// Initialize LCD and draw face
+void test4() {
+    ili9341_init();
+    ili9341_fill_screen(COLOR_BLACK);
+    draw_face_reaction("palm");
+}
+
 void ui_task(void *pvParameters) {
     ili9341_init();
     ili9341_fill_screen(COLOR_BLACK);
@@ -111,10 +124,11 @@ void ui_task(void *pvParameters) {
 }
 
 //--------------------MAIN--------------------//
-void app_main(void) {
+void main() {
     init_motor_driver();
     i2c_master_dev_handle_t imu_handle = i2c_init();
     wifi_init();
+    init_udp_logging("192.168.1.139", 5555); // IP of laptop
     
     cv_data.mutex = xSemaphoreCreateMutex();
     
@@ -122,6 +136,12 @@ void app_main(void) {
     xTaskCreatePinnedToCore(udp_listener_task, "udp", 4096, &cv_data, 5, NULL, 0);
     // Core 0: LCD Drawing
     xTaskCreatePinnedToCore(ui_task, "ui", 4096, NULL, 4, NULL, 0);
+    // Core 0: OTA Updates (ALWAYS LEAVE ON)
+    xTaskCreatePinnedToCore(ota_trigger_task, "ota_trig", 4096, NULL, 2, NULL, 0);
     // Core 1: PID Control
     xTaskCreatePinnedToCore(pid_control_task, "pid", 4096, NULL, configMAX_PRIORITIES - 1, NULL, 1);
+}
+
+void app_main(void) {
+    main();
 }

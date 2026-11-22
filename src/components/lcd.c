@@ -1,3 +1,4 @@
+#include <string.h>
 #include "driver/spi_master.h"
 #include "driver/gpio.h"
 
@@ -136,6 +137,7 @@ static void clear_face() {
     ili9341_fill_rect(60, 180, 120, 80, FACE_BG);
 }
 
+// TODO: Make the expressions more expressive and make them dynamic/animated
 void draw_face_reaction(const char* gesture) {
     clear_face();
 
